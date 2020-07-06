@@ -12,21 +12,21 @@
 #define SENHA_REDE "@Efacil1750k"       // Aqui você deve colocar a Senha da Sua Rede Wi-Fi
 #define WriteAPIKey "L9KRL420DF9CH9X5"  // Aqui você deve colocar a API KEY De Escrita do Thing Speak
 #define Numero_Canal 0                  // Constante 0 para conexões 
-#define DHTTYPE DHT11    // Tipo do Sensor utilizado (DHT11 ou DHT22)
-#define DHTPIN 33        // Número do GPIO em que o DHT11 está conectado
-int LED1 = 25;           // LED Verde do Projeto
-int LED2 = 26;           // LED Vermelho do Projeto
-int SENSOR_PRESENCA = 32;// Sensor de presença do projeto de IoT
-int ESTADO_SP = 0;       // Variável para armazenar o valor lido do Sensor de Presença
-int SENSOR_JANELA = 35;  // Sensor que determina o estado de uma janela (aberta / fechada)
-int ESTADO_SJ = 0;       // Variável para armazenar o valor lido do Sensor de Janela
-int SENSOR_LUZ = 34;     // Pino que receberá o sinal do sensor de Luz LDR
-int LUZ = 0;             // Variável para armazenar o valor do ADC - Sensor de LUZ
-float Temperatura = 0;   // Variável para a leitura de temperatura do DHT11
-float Umidade = 0;       // Variável para a leitura de umidade do DHT11
-String myStatus = "";    // Variável para a leitura do status de comunicação com Thing Speak
-WiFiClient  PCB_ESP32;    // Da o nome PCB_ESP32 ao Objeto utilizado (WiFiClient)  
-DHT SENSOR_DHT11(DHTPIN, DHTTYPE); // Da o nome SENSOR_DHT11 ao Objeto Utilizado (DHT)
+#define DHTTYPE DHT11                   // Tipo do Sensor utilizado (DHT11 ou DHT22)
+#define DHTPIN 33                       // Número do GPIO em que o DHT11 está conectado
+int LED1 = 25;                          // LED Verde do Projeto
+int LED2 = 26;                          // LED Vermelho do Projeto
+int SENSOR_PRESENCA = 32;               // Sensor de presença do projeto de IoT
+int ESTADO_SP = 0;                      // Variável para armazenar o valor lido do Sensor de Presença
+int SENSOR_JANELA = 35;                 // Sensor que determina o estado de uma janela (aberta / fechada)
+int ESTADO_SJ = 0;                      // Variável para armazenar o valor lido do Sensor de Janela
+int SENSOR_LUZ = 34;                    // Pino que receberá o sinal do sensor de Luz LDR
+int LUZ = 0;                            // Variável para armazenar o valor do ADC - Sensor de LUZ
+float Temperatura = 0;                  // Variável para a leitura de temperatura do DHT11
+float Umidade = 0;                      // Variável para a leitura de umidade do DHT11
+String myStatus = "";                   // Variável para a leitura do status de comunicação com Thing Speak
+WiFiClient  PCB_ESP32;                  // Da o nome PCB_ESP32 ao Objeto utilizado (WiFiClient)  
+DHT SENSOR_DHT11(DHTPIN, DHTTYPE);      // Da o nome SENSOR_DHT11 ao Objeto Utilizado (DHT)
 
 //............. BLOCO 3 - CONFIGURAÇÕES E INICIALIZAÇÕES DO PROJETO .............//
 void setup() 
@@ -46,7 +46,7 @@ void setup()
 //........ BLOCO 4 - LÓGICA DE CONTROLE DA PROGRAMAÇÃO E LOOP DE REPETIÇÃO ...........//
 void loop() 
 { 
-  int porcentagem = 0;               // Cria uma variável local para cálculo de porcentagem
+  int porcentagem = 0;                    // Cria uma variável local para cálculo de porcentagem
   
   if(WiFi.status() != WL_CONNECTED)       // Se a leitura do Status da Conexão Wifi for
   {                                       // For diferente de Conectado
@@ -98,16 +98,16 @@ void loop()
     digitalWrite(LED2, LOW);   // Desliga o Led Vermelho
   }
   
-  ThingSpeak.setField(1, Umidade);     
-  // Envia a Umidade ao "Field 1" do Thing Speak 
-  ThingSpeak.setField(2, Temperatura); 
-  // Envia a Temperatura ao "Field 2" do Thing Speak
-  ThingSpeak.setField(3, porcentagem); 
-  // Envia a porcentagem de luz ao "Field 3" do Thing Speak 
-  ThingSpeak.setField(4, ESTADO_SJ);   
-  // Envia o Estado do Sensor de Janela ao "Field 4" do Thing Speak
-  ThingSpeak.setField(5, ESTADO_SP);   
-  // Envia o Estado do Sensor de Presença ao "Field 5" do Thing Speak 
+  ThingSpeak.setField(1, Umidade);    // Seta o Valor da Umidade a ser Enviada  
+  // Para o Field 1 do ThingSpeak Através do ThingSpeak.writeFields();
+  ThingSpeak.setField(2, Temperatura);// Seta o Valor da Temperatura a ser Enviada
+  // Para o Field 2 do ThingSpeak Através do ThingSpeak.writeFields();
+  ThingSpeak.setField(3, porcentagem);// Seta o Valor da porcentagem a ser Enviada 
+  // Para o Field 3 do ThingSpeak Através do ThingSpeak.writeFields();
+  ThingSpeak.setField(4, ESTADO_SJ); // Seta o Valor de ESTADO_SJ a ser Enviada  
+  // Para o Field 4 do ThingSpeak Através do ThingSpeak.writeFields();
+  ThingSpeak.setField(5, ESTADO_SP); // Seta o Valor de ESTADO_SP a ser Enviada  
+  // Para o Field 5 do ThingSpeak Através do ThingSpeak.writeFields();
 
   int x = ThingSpeak.writeFields(Numero_Canal, WriteAPIKey); 
   // Envia dados ao ThingSpeak e Salva o Retorno em X
